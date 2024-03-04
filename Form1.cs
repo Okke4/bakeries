@@ -127,7 +127,7 @@ namespace mainApp
                 MySqlCommand command = new MySqlCommand("select * from bakery WHERE id = "+bakery_id, db.getConnection());
                 MySqlDataReader mydataReader = command.ExecuteReader();
                 mydataReader.Read();
-                string bakery_number = mydataReader.GetValue(1).ToString();
+                string? bakery_number = mydataReader.GetValue(1).ToString();
                 mydataReader.Close();
                 db.closeConnection();
                 //Add data to PDF file
