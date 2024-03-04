@@ -122,6 +122,7 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Хлебозаводы";
             Activated += Form1_Activated;
+            FormClosed += Form1_FormClosed;
             Load += Form1_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);

@@ -90,6 +90,7 @@ namespace mainApp
                 //Prepare SQL query to retrive data
                 MySqlCommand cmd = new MySqlCommand(query, db.getConnection());
                 MySqlDataReader dataReader = cmd.ExecuteReader();
+                
 
                 doc.Open(); //Access the PDF Document to write data
 
@@ -122,10 +123,15 @@ namespace mainApp
 
                 //Close database connection
                 db.closeConnection();
-
-
+                db.openConnection();
+                MySqlCommand command = new MySqlCommand("select * from bakery WHERE id = "+bakery_id, db.getConnection());
+                MySqlDataReader mydataReader = command.ExecuteReader();
+                mydataReader.Read();
+                string bakery_number = mydataReader.GetValue(1).ToString();
+                mydataReader.Close();
+                db.closeConnection();
                 //Add data to PDF file
-                doc.Add(new Paragraph("Список киосков, относящихся к " + bakery_id + " хлебозаводу.\n\n", textFont));
+                doc.Add(new Paragraph("Список киосков, относящихся к " + bakery_number + " хлебозаводу.\n\n", textFont));
                 doc.Add(table);
                 db.openConnection();
                 MySqlCommand avgcmd = new("SELECT AVG (income) FROM stall WHERE bakery_id = " + bakery_id, db.getConnection());
@@ -148,7 +154,7 @@ namespace mainApp
             try
             {
                 db.openConnection();
-                MySqlDataAdapter adapter = new("SELECT `number`, `phone`, `address` FROM `bakery`;", db.getConnection());
+                MySqlDataAdapter adapter = new("SELECT `number` AS Номер, `phone` AS Телефон, `address` AS Адрес FROM `bakery`;", db.getConnection());
                 DataTable dt = new();
                 adapter.Fill(dt);
                 dataGridView1.DataSource = dt;
@@ -201,6 +207,11 @@ namespace mainApp
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

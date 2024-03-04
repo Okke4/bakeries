@@ -91,7 +91,7 @@ namespace mainApp
             try
             {
                 db.openConnection();
-                MySqlDataAdapter adapter = new("SELECT `number`, `address`, `opened`, `income` FROM `stall` WHERE bakery_id =" + bakery_id, db.getConnection());
+                MySqlDataAdapter adapter = new("SELECT `number` AS Номер, `address` AS Адрес, `opened` AS `Дата открытия`, `income` AS Доход FROM `stall` WHERE bakery_id =" + bakery_id, db.getConnection());
                 DataTable dt = new();
                 adapter.Fill(dt);
                 dataGridView1.DataSource = dt;
