@@ -2,9 +2,7 @@ using iTextSharp.text;
 using iTextSharp.text.pdf;
 using MaterialSkin.Controls;
 using MySql.Data.MySqlClient;
-using MySqlX.XDevAPI.Relational;
 using System.Data;
-using System.Diagnostics;
 using Font = iTextSharp.text.Font;
 
 namespace mainApp
