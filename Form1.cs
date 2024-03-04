@@ -68,10 +68,13 @@ namespace mainApp
                 db.closeConnection();
 
                 string query = ("SELECT `stall`.`number`, `stall`.`address`, `stall`.`opened`, `stall`.`income`, `owner`.`surname`, `owner`.`name`, `owner`.`lastname`, `owner`.`birthday` FROM `stall` LEFT JOIN `owner` ON `owner`.`stall_id` = `stall`.`id` WHERE `bakery_id` = " + bakery_id);
-
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.DefaultExt = ".pdf";
+                saveFileDialog.FileName = "MySQL_to_PDF_table";
+                saveFileDialog.ShowDialog();
                 //Variables to create PDF document
                 Document doc = new();
-                PdfWriter.GetInstance(doc, new FileStream(@"MySQL_to_PDF_table.pdf", FileMode.Create)); //Output PDF file
+                PdfWriter.GetInstance(doc, new FileStream(saveFileDialog.FileName.ToString(), FileMode.Create)); //Output PDF file
                 PdfPTable table = new(8); //To create table inside the PDF
 
                 //Width of each column on table
@@ -144,7 +147,7 @@ namespace mainApp
                 doc.Close();
 
                 //Open the Output file
-                Process.Start(new ProcessStartInfo(@"MySQL_to_PDF_table.pdf") { UseShellExecute = true });
+                //Process.Start(new ProcessStartInfo(@"MySQL_to_PDF_table.pdf") { UseShellExecute = true });
             }
             catch (Exception ex) { MessageBox.Show(ex.ToString()); }
         }
